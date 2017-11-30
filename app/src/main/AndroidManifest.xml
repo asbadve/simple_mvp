@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LauncherActivity"
+            android:name=".view.activity.LauncherActivity"
             android:label="@string/title_activity_launcher"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
