@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SimpleMvp</string>
+    <string name="title_activity_launcher">LauncherActivity</string>
+    <string name="action_settings">Settings</string>
+</resources>
