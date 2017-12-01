@@ -2,4 +2,8 @@
     <string name="app_name">SimpleMvp</string>
     <string name="title_activity_launcher">LauncherActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="save">Save</string>
+    <string name="user_not_found">User not found</string>
+    <string name="user_saved">User saved</string>
+    <string name="user_name_required_message">User first and last name is required.</string>
 </resources>
