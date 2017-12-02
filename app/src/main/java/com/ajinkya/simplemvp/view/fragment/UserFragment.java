@@ -86,6 +86,12 @@ public class UserFragment extends Fragment implements UserView {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        userPresenter.pause();
+    }
+
+    @Override
     public void showUserSavedMessage() {
         Toast.makeText(getActivity(), R.string.user_saved, Toast.LENGTH_SHORT).show();
     }
