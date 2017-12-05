@@ -30,6 +30,7 @@ public class UserPresenterImpl implements UserPresenter {
     @Override
     public void setView(UserView view) {
         this.view = view;
+        loadUserDetails();
     }
 
     @Override
@@ -45,15 +46,5 @@ public class UserPresenterImpl implements UserPresenter {
             }
 
         }
-    }
-
-    @Override
-    public void resume() {
-        loadUserDetails();
-    }
-
-    @Override
-    public void pause() {
-
     }
 }

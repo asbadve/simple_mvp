@@ -52,13 +52,6 @@ public class UserFragment extends Fragment implements UserView {
         });
         return view;
     }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        userPresenter.setView(this);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -88,7 +81,6 @@ public class UserFragment extends Fragment implements UserView {
     @Override
     public void onPause() {
         super.onPause();
-        userPresenter.pause();
     }
 
     @Override

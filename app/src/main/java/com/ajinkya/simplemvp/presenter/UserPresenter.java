@@ -3,7 +3,7 @@ package com.ajinkya.simplemvp.presenter;
 
 import com.ajinkya.simplemvp.view.UserView;
 
-public interface UserPresenter extends LifeCyclePresenter {
+public interface UserPresenter {
     void loadUserDetails();
 
     void setView(UserView view);
