@@ -3,6 +3,7 @@ package com.ajinkya.simplemvp;
 import com.ajinkya.simplemvp.model.User;
 import com.ajinkya.simplemvp.presenter.UserPresenter;
 import com.ajinkya.simplemvp.presenter.UserPresenterImpl;
+import com.ajinkya.simplemvp.presenter.ViewNotFoundException;
 import com.ajinkya.simplemvp.repository.UserRepository;
 import com.ajinkya.simplemvp.view.UserView;
 
@@ -105,7 +106,7 @@ public class PresenterTests {
 
         presenter.saveUser();
 
-        verify(mockView, times(1)).getFirstName();
+        verify(mockView, times(2)).getFirstName();
         verify(mockView, never()).getLastName();
         verify(mockView, times(1)).showUserNameIsRequired();
 
@@ -116,8 +117,8 @@ public class PresenterTests {
         presenter.saveUser();
 
 
-        verify(mockView, times(2)).getFirstName();//called 2 times now, once before save user and after it
-        verify(mockView, times(1)).getLastName();//called 2 times now, once before
+        verify(mockView, times(4)).getFirstName();//called 2 times now, once before save user and after it
+        verify(mockView, times(2)).getLastName();//called 2 times now, once before
         verify(mockView, times(2)).showUserNameIsRequired();//called 2 times now, once before save user and after it
 
     }
@@ -136,8 +137,8 @@ public class PresenterTests {
         presenter.saveUser();
 
         //called two more times in the saveUser call.
-        verify(mockView, times(2)).getFirstName();
-        verify(mockView, times(2)).getLastName();
+        verify(mockView, times(3)).getFirstName();
+        verify(mockView, times(3)).getLastName();
 
         assertThat(user.getFirstName(), is("Foo"));
         assertThat(user.getLastName(), is("Bar"));
@@ -151,7 +152,6 @@ public class PresenterTests {
     }
 
 
-
     @Test
     public void shouldLoadUserDetailWhenViewIsSet() {
         presenter.setView(mockView);
@@ -160,13 +160,52 @@ public class PresenterTests {
         verify(mockView, times(1)).displayLastName(anyString());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = ViewNotFoundException.class)
     public void shouldThrowNullPointerExceptionWhenViewIsNull() {
         //null out the view
         presenter.setView(null);
 
         //try load the screen which will force interaction with the view
         presenter.loadUserDetails();
+    }
+
+    @Test
+    public void shouldBeAbleToHandleNullFirstName() {
+        when(mockView.getUserId()).thenReturn(1);
+
+        //Load the user
+        presenter.setView(mockView);
+
+        verify(mockView, times(1)).getUserId();
+
+        //setup the view mock
+        when(mockView.getFirstName()).thenReturn(null);//
+
+        presenter.saveUser();
+
+        verify(mockView, times(1)).getFirstName();
+        verify(mockView, never()).getLastName();
+        verify(mockView, times(1)).showUserNameIsRequired();
+    }
+
+    @Test
+    public void shouldBeAbleToHandleNullLastName() {
+        when(mockView.getUserId()).thenReturn(1);
+
+        //Load the user
+        presenter.setView(mockView);
+
+        verify(mockView, times(1)).getUserId();
+
+        //setup the view mock
+        when(mockView.getFirstName()).thenReturn("Foo");//
+        when(mockView.getLastName()).thenReturn(null);//
+
+        presenter.saveUser();
+
+        verify(mockView, times(2)).getFirstName();
+        verify(mockView, times(1)).getLastName();
+        verify(mockView, times(1)).showUserNameIsRequired();
     }
 
 
